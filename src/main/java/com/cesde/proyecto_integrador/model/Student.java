@@ -15,33 +15,24 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "class")
-public class Class {
+@Table (name = "students")
+public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
- 
-    @Column(name = "fecha", nullable = false, length = 20)
-    private String fecha;
 
-    @Column(name = "hora_inicio", nullable = false, length = 20)
-    private String horaInicio;
+    @Column(name = "name")
+    private String name = "";
 
-    @Column(name = "hora_fin", nullable = false, length = 20)
-    private String horaFin;
+    @Column(nullable = false, unique = true)
+    private String email;
 
-    @Column(name = "salon", nullable = false, length = 20)
-    private String salon;
-
-    // @OneToMany(mappedBy = "classEntity")
+    // @OneToMany(mappedBy = "student")
     // private List<Assistence> assistances;
 
     // @ManyToOne
-    // @JoinColumn(name = "teacher_id", nullable = false)
-    // private Teacher teacher;
+    // @JoinColumn(name = "team_id") 
+    // private Team team;
     
 
-    
-    
-    
 }

@@ -1,5 +1,4 @@
 package com.cesde.proyecto_integrador.model;
-
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -31,12 +30,9 @@ public class Team {
     @Column(name = "año", nullable = false)
     private int año;
 
+    // @OneToMany(mappedBy = "team")
+    // private List<Student> students;
 
-    @OneToMany(mappedBy = "team")
-    private List<User> users;
-
-    @OneToMany(mappedBy = "team")
-    private List<Class> classes;
 
 }
 

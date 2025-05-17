@@ -56,7 +56,5 @@ public class User {
         this.profile = newProfile;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "team_id", nullable = false)
-    private Team team;
+    
 }

@@ -6,6 +6,7 @@ import java.time.LocalTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,8 +18,8 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "assistence")
-public class Assistence {
+@Table(name = "assistance")
+public class Assistance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,13 +33,16 @@ public class Assistence {
     @Column(name = "estado", nullable = false, length = 20)
     private String estado;
 
-    // @ManyToOne
-    // @JoinColumn(name = "class_id", nullable = false)
-    // private Class class1;
+    @ManyToOne
+    @JoinColumn(name = "class_id", nullable = false)
+    private Class class1; 
 
-    // @ManyToOne
-    // @JoinColumn(name = "student_id", nullable = false)
-    // private Student student;
-    
+    @ManyToOne
+    @JoinColumn(name = "student_id", nullable = false)
+    private Student student;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "admin_id")
+    private Admin admin;
 
 }

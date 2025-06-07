@@ -1,9 +1,7 @@
 package com.cesde.proyecto_integrador.model;
 
-import java.util.HashSet;
-import java.util.Set;
 
-import jakarta.persistence.CascadeType;
+import java.util.List;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,27 +20,22 @@ public class Admin {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
-    private String name = "";
+    @Column(nullable = false)
+    private String nombre;
 
     @Column(nullable = false, unique = true)
-    private String email;
+    private String correo;
+
+    @Column(nullable = false)
+    private String contraseña;
+
     
 
-    @OneToMany(mappedBy = "admin", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Class> classes = new HashSet<>();
+    @OneToMany(mappedBy = "admin")
+    private List<Teacher> teachers;
 
-    @OneToMany(mappedBy = "admin", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Team> teams = new HashSet<>();
-
-    @OneToMany(mappedBy = "admin", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Teacher> teachers = new HashSet<>();
-
-    @OneToMany(mappedBy = "admin", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Student> students = new HashSet<>();
-
-    @OneToMany(mappedBy = "admin") 
-    private Set<Assistance> assistances = new HashSet<>();
+    @OneToMany(mappedBy = "admin")
+    private List<Student> students;
     
 
 

@@ -2,9 +2,10 @@ package com.cesde.proyecto_integrador.model;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
+
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -18,21 +19,28 @@ import lombok.Data;
 @Entity
 @Table(name = "teachers")
 public class Teacher {
+
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
-    private String name = "";
+    @Column(nullable = false)
+    private String nombre;
 
     @Column(nullable = false, unique = true)
-    private String email;
+    private String correo;
 
-    @OneToMany(mappedBy = "teacher")
-    private List<Class> classes;
+    @Column(nullable = false)
+    private String contraseña;
 
-    @ManyToOne(fetch = FetchType.LAZY) 
-    @JoinColumn(name = "admin_id", nullable = false) 
+    @ManyToOne
+    @JoinColumn(name = "admin_id")
     private Admin admin;
-    
+
+    // @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
+    // private List<Course> courses;
+
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
+    private List<Assistance> assistance;
+
 }

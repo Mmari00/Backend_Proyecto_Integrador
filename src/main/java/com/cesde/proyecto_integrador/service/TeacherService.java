@@ -2,6 +2,8 @@ package com.cesde.proyecto_integrador.service;
 
 import com.cesde.proyecto_integrador.model.Teacher;
 import com.cesde.proyecto_integrador.repository.TeacherRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,33 +12,35 @@ import java.util.Optional;
 @Service
 public class TeacherService {
 
-    private final TeacherRepository teacherRepository;
+     @Autowired
+    private TeacherRepository teacherRepository;
 
-    public TeacherService(TeacherRepository teacherRepository) {
-        this.teacherRepository = teacherRepository;
-    }
-
-    public List<Teacher> getAll() {
+    public List<Teacher> getAllTeachers() {
         return teacherRepository.findAll();
     }
 
-    public Optional<Teacher> getById(Long id) {
+    public Optional<Teacher> getTeacherById(Long id) {
         return teacherRepository.findById(id);
     }
 
-    public Teacher create(Teacher teacher) {
+    public List<Teacher> getTeachersByAdminId(Long adminId) {
+        return teacherRepository.findByAdminId(adminId);
+    }
+
+    public Teacher createTeacher(Teacher teacher) {
         return teacherRepository.save(teacher);
     }
 
-    public Optional<Teacher> update(Long id, Teacher teacher) {
-        if (teacherRepository.existsById(id)) {
-            teacher.setId(id);
-            return Optional.of(teacherRepository.save(teacher));
-        }
-        return Optional.empty();
+    public Teacher updateTeacher(Long id, Teacher updatedTeacher) {
+        return teacherRepository.findById(id).map(teacher -> {
+            teacher.setNombre(updatedTeacher.getNombre());
+            teacher.setAdmin(updatedTeacher.getAdmin());
+            return teacherRepository.save(teacher);
+        }).orElse(null);
     }
 
-    public void delete(Long id) {
+    public void deleteTeacher(Long id) {
         teacherRepository.deleteById(id);
     }
+
 }

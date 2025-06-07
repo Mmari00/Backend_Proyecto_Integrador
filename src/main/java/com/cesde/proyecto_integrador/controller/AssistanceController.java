@@ -2,49 +2,58 @@ package com.cesde.proyecto_integrador.controller;
 
 import com.cesde.proyecto_integrador.model.Assistance;
 import com.cesde.proyecto_integrador.service.AssistanceService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/assistances")
 public class AssistanceController {
 
-    private final AssistanceService assistanceService;
-
-    public AssistanceController(AssistanceService assistanceService) {
-        this.assistanceService = assistanceService;
-    }
+    @Autowired
+    private AssistanceService assistanceService;
 
     @GetMapping
-    public List<Assistance> getAll() {
-        return assistanceService.getAll();
+    public List<Assistance> getAllAssistances() {
+        return assistanceService.getAllAssistances();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Assistance> getById(@PathVariable Long id) {
-        Optional<Assistance> assistance = assistanceService.getById(id);
-        return assistance.map(ResponseEntity::ok)
-                         .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<Assistance> getAssistanceById(@PathVariable Long id) {
+        return assistanceService.getAssistanceById(id)
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/student/{studentId}")
+    public List<Assistance> getByStudentId(@PathVariable Long studentId) {
+        return assistanceService.getAssistancesByStudentId(studentId);
+    }
+
+    @GetMapping("/teacher/{teacherId}")
+    public List<Assistance> getByTeacherId(@PathVariable Long teacherId) {
+        return assistanceService.getAssistancesByTeacherId(teacherId);
     }
 
     @PostMapping
-    public Assistance create(@RequestBody Assistance assistance) {
-        return assistanceService.create(assistance);
+    public Assistance createAssistance(@RequestBody Assistance assistance) {
+        return assistanceService.createAssistance(assistance);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Assistance> update(@PathVariable Long id, @RequestBody Assistance assistance) {
-        Optional<Assistance> updatedAssistance = assistanceService.update(id, assistance);
-        return updatedAssistance.map(ResponseEntity::ok)
-                                .orElseGet(() -> ResponseEntity.notFound().build());
+        Assistance updated = assistanceService.updateAssistance(id, assistance);
+        return updated != null
+            ? ResponseEntity.ok(updated)
+            : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        assistanceService.delete(id);
+        assistanceService.deleteAssistance(id);
         return ResponseEntity.noContent().build();
     }
 }

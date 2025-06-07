@@ -1,50 +1,58 @@
 package com.cesde.proyecto_integrador.controller;
 
+
 import com.cesde.proyecto_integrador.model.Teacher;
 import com.cesde.proyecto_integrador.service.TeacherService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/api/teachers")
 public class TeacherController {
 
-    private final TeacherService teacherService;
-
-    public TeacherController(TeacherService teacherService) {
-        this.teacherService = teacherService;
-    }
+     @Autowired
+    private TeacherService teacherService;
 
     @GetMapping
-    public List<Teacher> getAll() {
-        return teacherService.getAll();
+    public List<Teacher> getAllTeachers() {
+        return teacherService.getAllTeachers();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Teacher> getById(@PathVariable Long id) {
-        Optional<Teacher> teacher = teacherService.getById(id);
-        return teacher.map(ResponseEntity::ok)
-                      .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<Teacher> getTeacherById(@PathVariable Long id) {
+        return teacherService.getTeacherById(id)
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
     }
 
+    // @GetMapping("/admin/{adminId}")
+    // public List<Teacher> getTeachersByAdmin(@PathVariable Long adminId) {
+    //     return teacherService.getTeachersByAdminId(adminId);
+    // }
+
     @PostMapping
-    public Teacher create(@RequestBody Teacher teacher) {
-        return teacherService.create(teacher);
+    public Teacher createTeacher(@RequestBody Teacher teacher) {
+        return teacherService.createTeacher(teacher);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Teacher> update(@PathVariable Long id, @RequestBody Teacher teacher) {
-        Optional<Teacher> updatedTeacher = teacherService.update(id, teacher);
-        return updatedTeacher.map(ResponseEntity::ok)
-                             .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<Teacher> updateTeacher(@PathVariable Long id, @RequestBody Teacher teacher) {
+        Teacher updated = teacherService.updateTeacher(id, teacher);
+        if (updated != null) {
+            return ResponseEntity.ok(updated);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        teacherService.delete(id);
+    public ResponseEntity<Void> deleteTeacher(@PathVariable Long id) {
+        teacherService.deleteTeacher(id);
         return ResponseEntity.noContent().build();
     }
 }

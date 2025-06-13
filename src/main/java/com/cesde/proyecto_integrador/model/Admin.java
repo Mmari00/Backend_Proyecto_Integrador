@@ -1,7 +1,7 @@
 package com.cesde.proyecto_integrador.model;
 
-
 import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,7 +15,7 @@ import lombok.Data;
 @Entity
 @Table (name = "admins")
 public class Admin {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,14 +29,13 @@ public class Admin {
     @Column(nullable = false)
     private String contraseña;
 
-    
-
     @OneToMany(mappedBy = "admin")
     private List<Teacher> teachers;
 
     @OneToMany(mappedBy = "admin")
     private List<Student> students;
+
     
-
-
+    @OneToMany(mappedBy = "admin")
+    private List<Course> courses;
 }

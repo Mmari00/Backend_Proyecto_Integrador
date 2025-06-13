@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/api/students")
 public class StudentController {
 
-    @Autowired
+     @Autowired
     private StudentService studentService;
 
     @GetMapping
@@ -25,24 +25,10 @@ public class StudentController {
     @GetMapping("/{id}")
     public ResponseEntity<Student> getStudentById(@PathVariable Long id) {
         return studentService.getStudentById(id)
-            .map(ResponseEntity::ok)
-            .orElse(ResponseEntity.notFound().build());
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/admin/{adminId}")
-    public List<Student> getStudentsByAdminId(@PathVariable Long adminId) {
-        return studentService.getStudentsByAdminId(adminId);
-    }
-
-    @GetMapping("/teacher/{teacherId}")
-    public List<Student> getStudentsByTeacherId(@PathVariable Long teacherId) {
-        return studentService.getStudentsByTeacherId(teacherId);
-    }
-
-    @GetMapping("/course/{courseId}")
-    public List<Student> getStudentsByCourseId(@PathVariable Long courseId) {
-        return studentService.getStudentsByCourseId(courseId);
-    }
 
     @PostMapping
     public Student createStudent(@RequestBody Student student) {

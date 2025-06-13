@@ -23,13 +23,7 @@ public class AssistanceService {
         return assistanceRepository.findById(id);
     }
 
-    public List<Assistance> getAssistancesByStudentId(Long studentId) {
-        return assistanceRepository.findByStudentId(studentId);
-    }
 
-    public List<Assistance> getAssistancesByTeacherId(Long teacherId) {
-        return assistanceRepository.findByTeacherId(teacherId);
-    }
 
     public Assistance createAssistance(Assistance assistance) {
         return assistanceRepository.save(assistance);
@@ -40,8 +34,8 @@ public class AssistanceService {
             assistance.setFecha(updatedAssistance.getFecha());
             assistance.setHora(updatedAssistance.getHora());
             assistance.setEstado(updatedAssistance.getEstado());
-            assistance.setStudent(updatedAssistance.getStudent());
-            assistance.setTeacher(updatedAssistance.getTeacher());
+            // assistance.setStudent(updatedAssistance.getStudent());
+            // assistance.setTeacher(updatedAssistance.getTeacher());
             return assistanceRepository.save(assistance);
         }).orElse(null);
     }

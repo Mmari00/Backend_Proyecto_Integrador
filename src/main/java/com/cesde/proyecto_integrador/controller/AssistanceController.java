@@ -28,15 +28,6 @@ public class AssistanceController {
             .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/student/{studentId}")
-    public List<Assistance> getByStudentId(@PathVariable Long studentId) {
-        return assistanceService.getAssistancesByStudentId(studentId);
-    }
-
-    @GetMapping("/teacher/{teacherId}")
-    public List<Assistance> getByTeacherId(@PathVariable Long teacherId) {
-        return assistanceService.getAssistancesByTeacherId(teacherId);
-    }
 
     @PostMapping
     public Assistance createAssistance(@RequestBody Assistance assistance) {

@@ -23,10 +23,7 @@ public class TeacherService {
         return teacherRepository.findById(id);
     }
 
-    public List<Teacher> getTeachersByAdminId(Long adminId) {
-        return teacherRepository.findByAdminId(adminId);
-    }
-
+ 
     public Teacher createTeacher(Teacher teacher) {
         return teacherRepository.save(teacher);
     }
@@ -34,7 +31,7 @@ public class TeacherService {
     public Teacher updateTeacher(Long id, Teacher updatedTeacher) {
         return teacherRepository.findById(id).map(teacher -> {
             teacher.setNombre(updatedTeacher.getNombre());
-            teacher.setAdmin(updatedTeacher.getAdmin());
+            // teacher.setAdmin(updatedTeacher.getAdmin());
             return teacherRepository.save(teacher);
         }).orElse(null);
     }

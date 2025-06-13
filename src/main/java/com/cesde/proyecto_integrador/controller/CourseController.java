@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.cesde.proyecto_integrador.model.Course;
 import com.cesde.proyecto_integrador.service.CourseService;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
 @RequestMapping("/api/courses")
@@ -35,10 +35,7 @@ public class CourseController {
             .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/teacher/{teacherId}")
-    public List<Course> getCoursesByTeacherId(@PathVariable Long teacherId) {
-        return courseService.getCoursesByTeacherId(teacherId);
-    }
+    
 
     @PostMapping
     public Course createCourse(@RequestBody Course course) {

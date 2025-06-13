@@ -2,15 +2,17 @@ package com.cesde.proyecto_integrador.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -19,6 +21,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table (name = "students")
+@JsonIgnoreProperties({"admin_id"})
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,30 +35,16 @@ public class Student {
 
     @Column(nullable = false)
     private String contraseña;
-    
-    
-     @ManyToOne
-    @JoinColumn(name = "admin_id")
-    private Admin admin;
 
-    @ManyToOne
-    @JoinColumn(name = "teacher_id")
-    private Teacher teacher;
-
-    // @ManyToOne
-    // @JoinColumn(name = "course_id")
-    // private Course course;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     private List<Assistance> assistances;
 
-    public Object getCourse() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCourse'");
-    }
+    @ManyToMany(mappedBy = "students")
+    private List<Course> courses;
 
-    public void setCourse(Object course) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setCourse'");
-    }
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "admin_id", nullable = true) 
+    private Admin admin;
 }

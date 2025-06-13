@@ -2,7 +2,9 @@ package com.cesde.proyecto_integrador.model;
 
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
@@ -18,6 +20,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "teachers")
+@JsonIgnoreProperties({"admin_id"})
 public class Teacher {
 
     @Id
@@ -33,14 +36,16 @@ public class Teacher {
     @Column(nullable = false)
     private String contraseña;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "teacher")
+    private List<Course> courses;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "teacher")
+    private List<Assistance> assistances;
+
+    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "admin_id")
+    @JoinColumn(name = "admin_id", nullable = true) 
     private Admin admin;
-
-    // @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
-    // private List<Course> courses;
-
-    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
-    private List<Assistance> assistance;
-
 }

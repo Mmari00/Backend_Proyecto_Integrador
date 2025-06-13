@@ -30,10 +30,7 @@ public class TeacherController {
             .orElse(ResponseEntity.notFound().build());
     }
 
-    // @GetMapping("/admin/{adminId}")
-    // public List<Teacher> getTeachersByAdmin(@PathVariable Long adminId) {
-    //     return teacherService.getTeachersByAdminId(adminId);
-    // }
+    
 
     @PostMapping
     public Teacher createTeacher(@RequestBody Teacher teacher) {
